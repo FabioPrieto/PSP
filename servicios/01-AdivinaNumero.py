@@ -1,7 +1,7 @@
 import socket
 import random
 
-IP = ""
+IP = ''
 PORT = 2000
 adivinar = random.randrange(1,9)
 
@@ -9,22 +9,22 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((IP,PORT))
     s.listen()
     
-    print("Servidor escuchando")
-    print(f"número a adivinar: {adivinar}")
+    print ("Servidor escuchando")
+    print ("Número a adivinar: " +str(adivinar))
     
     (cli,addr) = s.accept() #bloqueante
-    print(f"Cliente conectado en: {addr}")
+    print ("Cliente conectado en: ", addr)
     
-    cli.send(b"intenta adivinar mi numero!")
+    cli.send(b"Intenta adivianr mi numero! ")
     while True:
-        dato = cli.recv(64).decode()
-        print(dato)
+        dato = cli.recv(64).decode() #bloqueante
+        print (dato)
         if int(dato) == adivinar:
             cli.send(b"HAS ACERTADO")
             break
         elif int(dato) > adivinar:
-            cli.send(b"Numero Menor")
+            cli.send(b"Mi numero es menor")
         else:
-            cli.send(b"Numero Mayor")
-
-    cli.close
+            cli.send(b"Mi numero es mayor")            
+    cli.close()
+        
